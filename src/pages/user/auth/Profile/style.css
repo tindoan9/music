@@ -1,0 +1,48 @@
+.profile__header{
+    width: 50%;
+    transform: translate(150px, 120px);
+}
+.profile__header .profile__menu{
+    height: 30px;
+    border-bottom: 1px solid #999;
+    margin-bottom: 20px;
+}
+.profile__header .profile__menu b{
+    margin-right: 30px;
+    color: #000000;
+}
+.profile__header .profile__menu b:hover{
+    color: #239292;
+}
+.profile__header .profile__menu .active b{
+    border-bottom: 2px solid #239292;
+    color: #239292;
+}
+.form__favorite__song {
+    width: 50%;
+    transform: translate(150px, 120px);
+}
+.category__song{
+    display: flex;
+    justify-content: space-between;
+}
+.category__song .category__item{
+    display: flex;
+}
+.category__song .category__item p{
+    margin-right: 35px;
+    border: 1px solid #888;
+    padding: 0 20px;
+    border-radius: 30px;
+    font-size: 12px;
+    color: #000000;
+}
+.category__song .category__item .active p{
+    background-color: #239292;
+    border: 1px solid #239292;
+    color: #fff;
+}
+.profile__header .category__song .url__upload__song{
+    margin-right: 30px;
+}
+
