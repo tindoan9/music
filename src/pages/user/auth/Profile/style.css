@@ -1,3 +1,46 @@
+.form__profile{
+    display: flex;
+}
+.form__info__user {
+    width: 37%;
+    transform: translate(150px, 120px);
+    float: right;
+}
+.image__user{
+    display: flex;
+    justify-content: center;    
+    border-radius: 50%;
+    margin-left: 55px;
+}
+.image__user .edit__icon{
+    font-size: 24px;
+    margin-left: 30px;
+}
+.form__edit{
+    display: flex;
+    justify-content: space-around;
+}
+.form__edit h3{
+    text-align: center;
+}
+.form__edit .edit__image{
+    border-right: 1px solid #999;
+}
+.form__edit .edit__name{
+    margin-left: 20px;
+}
+.form__edit .edit__name input{
+    border: none;
+    padding: 5px 10px;
+    outline: none;
+    box-shadow: 0 0 2px 0 #239292;
+}
+.form__info__user h1{
+    text-align: center;
+    font-size: 34px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 .profile__header{
     width: 50%;
     transform: translate(150px, 120px);
@@ -20,7 +63,7 @@
 }
 .form__favorite__song {
     width: 50%;
-    transform: translate(150px, 120px);
+    transform: translate(150px, -50px);
 }
 .category__song{
     display: flex;
@@ -36,13 +79,55 @@
     border-radius: 30px;
     font-size: 12px;
     color: #000000;
+    margin-bottom: 20px;
 }
 .category__song .category__item .active p{
     background-color: #239292;
     border: 1px solid #239292;
     color: #fff;
 }
-.profile__header .category__song .url__upload__song{
-    margin-right: 30px;
+.media__header{
+    display: flex;
+    border-bottom: 1px solid rgb(217, 217, 217);
+    padding-bottom: 10px;
 }
-
+.media__header .media__left{
+    width: 50%;
+    margin-left: 10px;
+}
+.media__header .media__center{
+    width: 30%;
+}
+.list__songs{
+    border-bottom: 1px solid rgb(217, 217, 217);
+    display: flex;
+    height: 80px;
+    align-items: center;
+}
+.list__songs:hover{
+    background-color: #f3f3f3;
+}
+.list__songs .item__left{
+    width: 50%;
+    display: flex;
+    margin-left: 10px;
+}
+.list__songs .item__left img{
+    width: 60px;
+    height: 60px;
+    margin-right: 8px;
+}
+.list__songs .item__left .info__song{
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.list__songs .item__center{
+    width: 30%;
+}
+.list__songs .item__love{
+    width: 20%;
+    font-size: 18px;
+    color: #239292;
+}

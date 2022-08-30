@@ -1,0 +1,28 @@
+.form__edit__song{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+    flex-direction: column;
+}
+.form__edit__song .edit__song__item{
+    width: 500px;
+}
+.form__edit__song .edit__song__item .song__name__item input{
+    display: block;
+    font-size: 18px;
+    width: 95%;
+    margin: 20px;
+    padding: 8px 50px;
+    outline: none;
+    border: 1px solid #222;
+    border-radius: 8px;
+}
+.form__edit__song p{
+    text-align: center;
+    color: #fff;
+    background-color: #8aabff;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 8px;
+}

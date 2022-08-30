@@ -32,6 +32,7 @@ export default function Register() {
 
   const avata = userInfoState?.avatar
   const randomAvatar = avata[Math.floor(Math.random() * avata.length)]
+  const decentralization = 'member'
 
   const {
     register,
@@ -53,7 +54,7 @@ export default function Register() {
   }, [register]);
 
   const onFinish = (values) => {
-    dispatch(registerAction({values, randomAvatar}));
+    dispatch(registerAction({values, randomAvatar, decentralization}));
     navigate(`/login`);
   };
 

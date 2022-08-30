@@ -1,4 +1,9 @@
 @import url('./layouts/SideBarLayout/SidebarHeader/style.css');
+@import url('./layouts/AdminLayout/AdminHeader/style.css');
 @import url('./pages/user/HomePage/style.css');
 @import url('./pages/user/auth/Login/style.css');
 @import url('./pages/user/auth/Profile/style.css');
+@import url('./pages/user/Trends/style.css');
+@import url('./pages/dashboard/HomeAdmin/style.css');
+@import url('./pages/dashboard/PostSong/style.css');
+@import url('./pages/dashboard/EditSong/style.css');

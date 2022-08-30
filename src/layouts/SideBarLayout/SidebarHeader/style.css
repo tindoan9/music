@@ -1,7 +1,8 @@
 header{
-    position: absolute;
+    position: fixed;
     width: 100%;
     height: 70px;
+    z-index: 2;
     background-color: #e9f3f3;
     box-shadow: 1px 1px 15px 1px rgb(218, 217, 217);
 }

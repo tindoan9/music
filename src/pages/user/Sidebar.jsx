@@ -4,6 +4,7 @@ import { SidebarLayout } from '../../layouts/SideBarLayout/SidebarLayout';
 import Login from './auth/Login/Login';
 import Register from './auth/Register/Register';
 import HomePage from './HomePage/HomePage';
+import Trends from './Trends/Trends';
 
 export default function Sidebar(props) {
     const location = useLocation();
@@ -13,9 +14,7 @@ export default function Sidebar(props) {
 		case "/":
 			return <HomePage/>;
         case "/trends":
-			return <HomePage/>;
-		case "/albums":
-			return <HomePage/>;
+			return <Trends/>;
 		case "/login":
 			return <Login/>;
 		case "/register":

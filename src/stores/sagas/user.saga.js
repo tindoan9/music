@@ -1,6 +1,6 @@
 import { delay, put, takeEvery } from "redux-saga/effects";
-import { AuthAPI, AvatarAPI } from "../../api";
-import { fetchAvatarAction, fetchAvatarActionFailed, fetchAvatarActionSuccess, loginAction, loginActionFailed, loginActionSuccess, registerAction, registerActionFailed, registerActionSuccess } from "../slices/user.slice";
+import { AuthAPI, AvatarAPI, UserAPI } from "../../api";
+import { fetchAvatarAction, fetchAvatarActionFailed, fetchAvatarActionSuccess, loginAction, loginActionFailed, loginActionSuccess, registerAction, registerActionFailed, registerActionSuccess, updateInfoUserAction, updateInfoUserActionFailed, updateInfoUserActionSuccess } from "../slices/user.slice";
 
 function* login(action) {
     try {
@@ -24,6 +24,7 @@ function* register(action) {
             fullName: registerPayload.values.fullname,
             email: registerPayload.values.email,
             password: registerPayload.values.password,
+            decentralization: registerPayload.decentralization
         });
         yield put(registerActionSuccess(response.data.user));
     } catch (e) {
@@ -43,8 +44,26 @@ function* fetAvatar(action){
     }
 }
 
+function* updateInfoUser(action) {
+    try {
+        yield delay(2000)
+        const infoUserPayload = action.payload
+        const response = yield UserAPI.updateInfoUser({
+            id: infoUserPayload.userId,
+            email: infoUserPayload.userEmail,
+            avatar: infoUserPayload.urlImage,
+            fullName: infoUserPayload.editNameInput,
+            decentralization: infoUserPayload.decentralization
+        }, infoUserPayload.userId)
+        yield put(updateInfoUserActionSuccess(response.data))
+    } catch (e) {
+        yield put(updateInfoUserActionFailed(e.response.data))
+    }
+}
+
 export function* userSaga() {
     yield takeEvery(registerAction, register);
     yield takeEvery(loginAction, login);
     yield takeEvery(fetchAvatarAction, fetAvatar);
+    yield takeEvery(updateInfoUserAction, updateInfoUser);
 }

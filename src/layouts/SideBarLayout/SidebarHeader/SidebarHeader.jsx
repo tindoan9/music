@@ -11,9 +11,9 @@ import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import menu from "./menu";
 import { Avatar, Dropdown, Image, Menu } from "antd";
-import AudioPlayer from "react-h5-audio-player";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutAction } from "../../../stores/slices/user.slice";
+
 
 export default function SidebarHeader() {
   const userInfoState = useSelector((state) => state.user.userInfoState);
@@ -49,7 +49,7 @@ export default function SidebarHeader() {
           label: (
             <NavLink to={"/login"}>
               <span>
-                <LoginOutlined /> Đăng nhập
+                <LoginOutlined style={{marginRight: '10px'}} /> Đăng nhập
               </span>
             </NavLink>
           ),
@@ -66,7 +66,7 @@ export default function SidebarHeader() {
           label: (
             <NavLink to={"/mymusic/song"}>
               <span>
-                <ProfileOutlined /> Cá nhân
+                <ProfileOutlined style={{marginRight: '10px'}} /> Cá nhân
               </span>
             </NavLink>
           ),
@@ -75,7 +75,7 @@ export default function SidebarHeader() {
           key: "2",
           label: (
             <span onClick={handleLogout}>
-              <LogoutOutlined /> Đăng xuất
+              <LogoutOutlined style={{marginRight: '10px'}} /> Đăng xuất
             </span>
           ),
         },
@@ -116,7 +116,7 @@ export default function SidebarHeader() {
 
   const urlDashboard = (
     <>
-        <NavLink to={"/dashboard"}>
+        <NavLink to={"/dashboard/home"}>
           <DashboardOutlined 
             className='dashboard__icon'
             style={{
@@ -173,15 +173,6 @@ export default function SidebarHeader() {
             );
           })}
         </ul>
-      </div>
-      <div className="audio__play">
-        <AudioPlayer
-          // autoPlay
-          volume={0.2}
-          src="https://hanzluo.s3-us-west-1.amazonaws.com/music/wuyuwuqing.mp3"
-          onPlay={(e) => console.log("onPlay")}
-          // other props here
-        />
       </div>
     </>
   );

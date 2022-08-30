@@ -15,6 +15,8 @@ const initialState = {
     }
 }
 
+export const USER_ID = userInfoFromStorage?.id
+
 const userSlice = createSlice({
     name: 'user',
     initialState,
@@ -109,10 +111,42 @@ const userSlice = createSlice({
         },
         fetchAvatarActionFailed: (state, action) => {
             notification.error(action.payload)
+        },
+        updateInfoUserAction: (state, action) => {
+            localStorage.removeItem(USER_INFO_KEY)
+            state.userInfoState = {
+                ...state.userInfoState,
+                loading: true
+            }
+        },
+        updateInfoUserActionSuccess: (state, action) => {
+            notification.success({
+                message: `Thay đổi thông tin thành công!`,
+                duration: 2
+            });
+            const updateInfoUser = action.payload
+            localStorage.setItem(USER_INFO_KEY, JSON.stringify(updateInfoUser))
+            state.userInfoState = {
+                ...state.userInfoState,
+                data: updateInfoUser,
+                loading: false,
+                error: null
+            }
+        },
+        updateInfoUserActionFailed: (state, action) => {
+            notification.error({
+                message: `Thay đổi ảnh thất bại!`,
+                duration: 2
+            });
+            state.userInfoState = {
+                ...state.userInfoState,
+                loading: false,
+                error: action.payload
+            }
         }
     }
 })
 
-export const {loginAction, loginActionSuccess, loginActionFailed, registerAction, registerActionSuccess, registerActionFailed, logoutAction, fetchAvatarAction, fetchAvatarActionSuccess, fetchAvatarActionFailed} = userSlice.actions
+export const {loginAction, loginActionSuccess, loginActionFailed, registerAction, registerActionSuccess, registerActionFailed, logoutAction, fetchAvatarAction, fetchAvatarActionSuccess, fetchAvatarActionFailed, updateInfoUserAction, updateInfoUserActionSuccess, updateInfoUserActionFailed} = userSlice.actions
 
 export const userReducer = userSlice.reducer

@@ -47,7 +47,6 @@ export default function Login() {
   }, [register]);
 
   const onFinish = (values) => {
-    console.log(values);
     dispatch(loginAction(values));
   };
 
@@ -122,7 +121,6 @@ export default function Login() {
                 </Form.Item>
               )}
             />
-
             <Form.Item>
               <button className="form__button" type="submit">
                 {loading && (<LoadingOutlined style={{
