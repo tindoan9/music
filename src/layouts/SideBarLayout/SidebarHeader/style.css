@@ -8,22 +8,36 @@ header{
 }
 .header__layout {
     display: flex;
-    justify-content: space-around;
+    justify-content: end;
     align-items: center;
     height: 70px;
+    margin-right: 100px;
 }
-.header__layout .search__music .search__icon{
+.header__layout .user__outline .search__icon{
     font-size: 24px;
-    transform: translate(35px, 0);
 }
-.header__layout .search__music input{
-    font-size: 16px;
-    padding: 9px 150px 4px 42px;
-    border: none;
-    border-radius: 30px;
-    background-color: #f5f9f9;
-    box-shadow: 0 0 3px 0 #999;
-    outline: none;
+.input__search__song{
+    width: 100%;
+	padding: 5px 20px;
+	outline: none;
+	border: none;
+	border-bottom: 1px solid #333;
+}
+.song__list__search {
+    display: flex;
+	margin-top: 20px;
+    padding: 5px;
+}
+.song__list__search:hover{
+    background-color: #f3f3f3;
+}
+.song__list__search img{
+    width: 70px;
+    height: 70px;
+    margin-right: 30px;
+}
+.song__list__search .info__song__search{
+    display: grid;
 }
 .header__layout .user__outline{
     margin-left: 100px;
@@ -32,8 +46,8 @@ header{
     margin-right: 25px;
     margin-left: 25px;
 }
-.header__layout .user__outline .bell__icon, .user__icon, .dashboard__icon{
-    font-size: 24px;
+.header__layout .user__outline .bell__icon, .user__icon{
+    font-size: 24px; 
 }
 .sidebar{
     position: fixed;

@@ -20,6 +20,7 @@ export default function ProfileHeader() {
   const [visible, setVisible] = useState(false);
   const [urlImage, setUrlImage] = useState(userAvatar);
   const [editNameInput, setEditNameInput] = useState(userFullName);
+  
   const showModal = () => {
     setVisible(true);
   };

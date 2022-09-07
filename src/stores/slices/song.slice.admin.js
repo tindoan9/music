@@ -6,6 +6,8 @@ const initialState = {
         data: [],
         postSong: [],
         playSong: [],
+        deleteSong: [],
+        searchSong: '',
         loading: false,
         error: null
     }
@@ -72,7 +74,7 @@ const songSlice = createSlice({
             const newData = state.songState.data.filter(item => item !== action.payload)
             state.songState = {
               ...state.songState,
-              data: newData,
+              deleteSong: newData,
               loading:false,
             }
         },

@@ -1,7 +1,7 @@
 import { VerticalAlignTopOutlined } from "@ant-design/icons";
 import { BackTop, notification } from "antd";
 import AudioPlayer from "react-h5-audio-player";
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import {
@@ -23,34 +23,44 @@ const style = {
 
 export default function Audio() {
   const songState = useSelector((state) => state.song.songState);
+  const dispatch = useDispatch();
+
   const songActive = songState?.playSong;
   const lengthSong = songState?.data?.length;
-
-  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchSongAction());
   }, []);
 
   const handleNextSong = () => {
-    if (songActive.id !== lengthSong) {
-      dispatch(playSongAction(songActive.id + 1));
-    } else {
+    if (songActive.id === lengthSong) {
       notification.warning({
         message: `Bạn đang ở cuối danh sách nhạc!`,
         duration: 2,
       });
+    } else if (!songActive.urlSong) {
+      notification.warning({
+        message: `Bạn chưa chọn nhạc!`,
+        duration: 2,
+      });
+    } else {
+      dispatch(playSongAction(songActive.id + 1));
     }
   };
 
   const handlePreviouSong = () => {
-    if (songActive.id !== 1) {
-      dispatch(playSongAction(songActive.id - 1));
-    } else {
+    if (songActive.id === 1) {
       notification.warning({
         message: `Bạn đang ở đầu danh sách nhạc!`,
         duration: 2,
       });
+    } else if (!songActive.urlSong) {
+      notification.warning({
+        message: `Bạn chưa chọn nhạc!`,
+        duration: 2,
+      });
+    } else {
+      dispatch(playSongAction(songActive.id - 1));
     }
   };
 

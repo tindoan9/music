@@ -64,6 +64,7 @@
 .form__favorite__song {
     width: 50%;
     transform: translate(150px, -50px);
+    padding-bottom: 50px;
 }
 .category__song{
     display: flex;

@@ -10,7 +10,8 @@ function* postSong(action){
             songName: songPayload.songName,
             songAuthor: songPayload.songAuthor,
             urlSong: songPayload.urlSong,
-            imgSong: songPayload.imgSong
+            imgSong: songPayload.imgSong,
+            like: songPayload.like,
         })
         yield put(postSongActionSuccess(response.data))
     } catch (e) {

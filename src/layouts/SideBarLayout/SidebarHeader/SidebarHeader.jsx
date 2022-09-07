@@ -10,19 +10,25 @@ import {
 import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import menu from "./menu";
-import { Avatar, Dropdown, Image, Menu } from "antd";
+import { Avatar, Dropdown, Image, Menu, Drawer } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { logoutAction } from "../../../stores/slices/user.slice";
-
+import {
+  logoutAction,
+  searchSongAction,
+} from "../../../stores/slices/user.slice";
+import { playSongAction } from "../../../stores/slices/song.slice.admin";
 
 export default function SidebarHeader() {
   const userInfoState = useSelector((state) => state.user.userInfoState);
   const [menuList, setMenuList] = useState([]);
   const [urlAdmin, setUrlAmin] = useState();
+  const [idSong, setIdSong] = useState(0);
+  const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const userInfoDashboard = userInfoState?.data?.decentralization;
+  const searchItem = userInfoState?.searchSong;
 
   useEffect(() => {
     return !userInfoState.data
@@ -41,6 +47,24 @@ export default function SidebarHeader() {
     navigate(`/`);
   };
 
+  const showDrawer = () => {
+    setOpen(true);
+  };
+
+  const onClose = () => {
+    setOpen(false);
+  };
+
+  const handleSearchChange = (keyword) => {
+    const values = keyword.target.value;
+    dispatch(searchSongAction(values));
+  };
+
+  const handlePlaySong = (song) => {
+    setIdSong(song);
+    dispatch(playSongAction(song));
+  };
+
   const unauthenticatedMenu = (
     <Menu
       items={[
@@ -49,7 +73,7 @@ export default function SidebarHeader() {
           label: (
             <NavLink to={"/login"}>
               <span>
-                <LoginOutlined style={{marginRight: '10px'}} /> Đăng nhập
+                <LoginOutlined style={{ marginRight: "10px" }} /> Đăng nhập
               </span>
             </NavLink>
           ),
@@ -66,7 +90,7 @@ export default function SidebarHeader() {
           label: (
             <NavLink to={"/mymusic/song"}>
               <span>
-                <ProfileOutlined style={{marginRight: '10px'}} /> Cá nhân
+                <ProfileOutlined style={{ marginRight: "10px" }} /> Cá nhân
               </span>
             </NavLink>
           ),
@@ -75,7 +99,7 @@ export default function SidebarHeader() {
           key: "2",
           label: (
             <span onClick={handleLogout}>
-              <LogoutOutlined style={{marginRight: '10px'}} /> Đăng xuất
+              <LogoutOutlined style={{ marginRight: "10px" }} /> Đăng xuất
             </span>
           ),
         },
@@ -85,48 +109,47 @@ export default function SidebarHeader() {
 
   const avataUser = (
     <Avatar
-    style={{
+      style={{
         width: "35px",
-        height: '35px',
-        marginBottom: '10px'
+        height: "35px",
+        marginBottom: "10px",
       }}
       src={
         <Image
           src={userInfoState?.data?.avatar}
           style={{
-            width: '50px',
-
+            width: "50px",
           }}
         />
       }
     />
-  )
+  );
 
   const unAvataUser = (
     <UserOutlined
-                style={{
-                  backgroundColor: "#cce0e0",
-                  padding: "8px 8px",
-                  borderRadius: "60px",
-                }}
-                className="user__icon"
-              />
-  )
-  
+      style={{
+        backgroundColor: "#cce0e0",
+        padding: "8px 8px",
+        borderRadius: "60px",
+      }}
+      className="user__icon"
+    />
+  );
 
   const urlDashboard = (
     <>
-        <NavLink to={"/dashboard/home"}>
-          <DashboardOutlined 
-            className='dashboard__icon'
-            style={{
-                backgroundColor: "#cce0e0",
-                padding: "8px 8px",
-                borderRadius: "60px",
-                color: '#111'
-              }}
-          />
-        </NavLink>
+      <NavLink to={"/dashboard/home"}>
+        <DashboardOutlined
+          style={{
+            fontSize: 24,
+            backgroundColor: "#cce0e0",
+            padding: "8px 8px",
+            borderRadius: "60px",
+            color: "#111",
+            marginRight: 25,
+          }}
+        />
+      </NavLink>
     </>
   );
 
@@ -134,12 +157,47 @@ export default function SidebarHeader() {
     <>
       <header>
         <div className="header__layout">
-          <div className="search__music">
-            <SearchOutlined className="search__icon" />
-            <input type="text" placeholder="Tìm kiếm bài hát, nghệ sĩ" />
-          </div>
           <div className="user__outline">
             {urlAdmin}
+            <SearchOutlined
+              onClick={showDrawer}
+              style={{
+                backgroundColor: "#cce0e0",
+                padding: "8px 8px",
+                borderRadius: "60px",
+              }}
+              className="search__icon"
+            />
+            <Drawer
+              title="Tìm kiếm"
+              placement="right"
+              onClose={onClose}
+              visible={open}
+            >
+              <input
+                type="text"
+                className="input__search__song"
+                placeholder="Nhập Tên Bài Hát Hoặc Nghệ Sĩ"
+                onChange={handleSearchChange}
+              />
+              {(searchItem ?? []).map?.((item) => {
+                return (
+                  <div
+                    onClick={() => handlePlaySong(item.id)}
+                    className={`song__list__search ${
+                      idSong === item.id && "active__song"
+                    }`}
+                    key={item.id}
+                  >
+                    <img src={item.imgSong} alt="" />
+                    <div className="info__song__search">
+                      <b>{item.songName}</b>
+                      <span>{item.songAuthor}</span>
+                    </div>
+                  </div>
+                );
+              })}
+            </Drawer>
             <BellOutlined
               style={{
                 backgroundColor: "#cce0e0",
@@ -155,7 +213,7 @@ export default function SidebarHeader() {
                 pointAtCenter: true,
               }}
             >
-                {!userInfoState.data ? unAvataUser : avataUser}
+              {!userInfoState.data ? unAvataUser : avataUser}
             </Dropdown>
           </div>
         </div>
@@ -165,7 +223,7 @@ export default function SidebarHeader() {
           {menu.map((item) => {
             return (
               <li key={item.url} className="menu__item">
-                <NavLink style={{ color: '#239292'}} to={item.url}>
+                <NavLink style={{ color: "#239292" }} to={item.url}>
                   <span className="icon">{item.icon}</span>
                   {/* <span className="title">{item.title}</span> */}
                 </NavLink>

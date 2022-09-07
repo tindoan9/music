@@ -1,4 +1,9 @@
-import { CustomerServiceOutlined, HeartOutlined } from "@ant-design/icons";
+import {
+  CustomerServiceOutlined,
+  HeartFilled,
+  HeartOutlined,
+} from "@ant-design/icons";
+import { notification } from "antd";
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -7,27 +12,68 @@ import {
   fetchSongAction,
   playSongAction,
 } from "../../../stores/slices/song.slice.admin";
+import {
+  countLikeAction,
+  fetchListUserLikeSongAction,
+  likeSongAction,
+} from "../../../stores/slices/user.slice";
 
 export default function HomePage() {
+  const userInfoState = useSelector((state) => state.user.userInfoState);
   const songState = useSelector((state) => state.song.songState);
   const dispatch = useDispatch();
   const [idSong, setIdSong] = useState(0);
 
   const listSong = songState?.data;
   const songActive = songState?.playSong;
+  const userInfo = userInfoState?.data;
+  const userID = userInfo?.id;
+  const userEmail = userInfo?.email;
+  const listInfoLike = userInfoState?.likeSong;
 
   useEffect(() => {
     dispatch(fetchSongAction());
+    dispatch(fetchListUserLikeSongAction())
   }, [dispatch]);
+
+  useEffect(() => {
+    setIdSong(songActive.id);
+  }, [songActive]);
 
   const handlePlaySong = (song) => {
     setIdSong(song);
     dispatch(playSongAction(song));
   };
 
-  useEffect(() => {
-    setIdSong(songActive.id);
-  }, [songActive]);
+  const handleLikeSong = (
+    idUser,
+    email,
+    idSong,
+    songName,
+    songAuthor,
+    urlSong,
+    imgSong,
+    countLike
+  ) => {
+    if (!userInfo) {
+      notification.warning({
+        message: "Bạn cần đăng nhập để có thể yêu thích bài hát!",
+        duration: 2,
+      });
+    } else {
+      let newUserLikeSong = {
+        idUser,
+        email,
+        idSong,
+        songName,
+        songAuthor,
+        urlSong,
+        imgSong,
+      };
+      dispatch(countLikeAction({ countLike, idSong }));
+      dispatch(likeSongAction(newUserLikeSong));
+    }
+  };
 
   return (
     <>
@@ -67,21 +113,42 @@ export default function HomePage() {
                   <span></span>
                 </div>
                 <div className="newsong__right">
-                  <HeartOutlined />
+                  {listInfoLike?.userId === userID && listInfoLike?.songId === item.id ? (
+                    <HeartFilled
+                      className="icon__love"
+                      onClick={() => {notification.warning({
+                        message: "Bạn cần vào thư viện để có thể bỏ thích bài hát này!",
+                        duration: 2,
+                      });}}
+                    />
+                  ) : (
+                    <HeartOutlined
+                      className="icon__love"
+                      onClick={() =>
+                        handleLikeSong(
+                          userID,
+                          userEmail,
+                          item.id,
+                          item.songName,
+                          item.songAuthor,
+                          item.urlSong,
+                          item.imgSong,
+                          item.like
+                        )
+                      }
+                    />
+                  )}
                 </div>
               </div>
             );
           })}
         </div>
         <div className="info__select__song">
-          {<img src={songActive.imgSong} alt="" /> && (
-            <CustomerServiceOutlined
-              style={{ fontSize: "130px", color: "#239292" }}
-            />
-          )}
-
-          <b>{songActive.songName}</b>
-          <span>{songActive.songAuthor}</span>
+          <CustomerServiceOutlined
+            style={{ fontSize: "130px", color: "#239292" }}
+          />
+          <b>{songActive?.songName}</b>
+          <span>{songActive?.songAuthor}</span>
         </div>
       </div>
     </>

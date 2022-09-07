@@ -10,12 +10,17 @@ const initialState = {
         data: userInfoFromStorage,
         createAccount: [],
         avatar: [],
+        likeSong: [],
+        dislikeSong: [],
+        countLike: [],
+        countDislike: [],
+        searchSong: [],
+        listUserLikeSong: [], 
         loading: false,
         error: null
     }
 }
 
-export const USER_ID = userInfoFromStorage?.id
 
 const userSlice = createSlice({
     name: 'user',
@@ -143,10 +148,138 @@ const userSlice = createSlice({
                 loading: false,
                 error: action.payload
             }
+        },
+        likeSongAction: (state, action) => {
+            state.userInfoState = {
+                ...state.userInfoState,
+                loading: true
+            }
+        },
+        likeSongActionSuccess: (state, action) => {
+            notification.success({
+                message: `Bạn đã yêu thích bài hát ${action.payload.songName}!`,
+                duration: 3
+            });
+            const newUserLikeSong = action.payload
+            state.userInfoState = {
+                ...state.userInfoState,
+                likeSong: newUserLikeSong,
+                loading: false,
+                error: null
+            }
+        },
+        likeSongActionFailed: (state, action) => {
+            notification.error({
+                message: `${action.payload}`,
+                duration: 2
+            });
+            state.userInfoState = {
+                ...state.userInfoState,
+                loading: false,
+                error: action.payload
+            }
+        },
+        dislikeSongAction: (state, action) => {
+            state.userInfoState = {
+                ...state.userInfoState,
+                loading: true
+            }
+        },
+        dislikeSongActionSuccess: (state, action) => {
+            const userDislikeSong = action.payload
+            notification.success({
+                message: `Bạn đã xóa lượt thích bài hát ${userDislikeSong.songName}!`,
+                duration: 3
+            });
+            state.userInfoState = {
+                ...state.userInfoState,
+                dislikeSong: userDislikeSong,
+                loading: false,
+                error: null
+            }
+        },
+        dislikeSongActionFailed: (state, action) => {
+            notification.error({
+                message: `${action.payload}`,
+                duration: 2
+            });
+            state.userInfoState = {
+                ...state.userInfoState,
+                loading: false,
+                error: action.payload
+            }
+        },
+        countLikeAction: (state, action) => {
+            state.userInfoState = {
+                ...state.userInfoState,
+                loading: true
+            }
+        },
+        countLikeActionSuccess: (state, action) => {
+            const countLike = action.payload
+            state.userInfoState = {
+                ...state.userInfoState,
+                countLike: countLike,
+                loading: false
+            }
+        },
+        countLikeActionFailed: (state, action) => {
+            notification.error(action.payload)
+        },
+        countDislikeAction: (state, action) => {
+            state.userInfoState = {
+                ...state.userInfoState,
+                loading: true
+            }
+        },
+        countDislikeActionSuccess: (state, action) => {
+            const countDislike = action.payload
+            state.userInfoState = {
+                ...state.userInfoState,
+                countDislike: countDislike,
+                loading: false
+            }
+        },
+        countDislikeActionFailed: (state, action) => {
+            notification.error(action.payload)
+        },
+        searchSongAction: (state, action) => {
+            state.userInfoState = {
+                ...state.userInfoState,
+                loading: true
+            }
+        },
+        searchSongActionSuccess: (state, action) => {
+            const {search} = action.payload
+            state.userInfoState = {
+                ...state.userInfoState,
+                searchSong: search,
+                loading: false
+            }
+        },
+        searchSongActionFailed: (state, action) => {
+            notification.error(action.payload)
+        },
+        fetchListUserLikeSongAction: (state, action) => {
+            state.userInfoState = {
+                ...state.userInfoState,
+                loading: true
+            }
+        },
+        fetchListUserLikeSongActionSuccess: (state, action) => {
+            const {listUserLikeSong} = action.payload
+            state.userInfoState = {
+                ...state.userInfoState,
+                listUserLikeSong,
+                loading: false
+            }
+        },
+        fetchListUserLikeSongActionFailse: (state, action) => {
+            notification.error(action.payload)
         }
     }
 })
 
-export const {loginAction, loginActionSuccess, loginActionFailed, registerAction, registerActionSuccess, registerActionFailed, logoutAction, fetchAvatarAction, fetchAvatarActionSuccess, fetchAvatarActionFailed, updateInfoUserAction, updateInfoUserActionSuccess, updateInfoUserActionFailed} = userSlice.actions
+export const {loginAction, loginActionSuccess, loginActionFailed, registerAction, registerActionSuccess, registerActionFailed, logoutAction, fetchAvatarAction, fetchAvatarActionSuccess, fetchAvatarActionFailed, updateInfoUserAction, updateInfoUserActionSuccess, updateInfoUserActionFailed, likeSongAction, likeSongActionSuccess, likeSongActionFailed, searchSongAction, searchSongActionSuccess, searchSongActionFailed, dislikeSongAction, dislikeSongActionSuccess, dislikeSongActionFailed, countLikeAction, countLikeActionSuccess, countLikeActionFailed, countDislikeAction, countDislikeActionSuccess, countDislikeActionFailed, fetchListUserLikeSongAction, fetchListUserLikeSongActionSuccess, fetchListUserLikeSongActionFailse} = userSlice.actions
 
 export const userReducer = userSlice.reducer

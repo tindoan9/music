@@ -25,10 +25,16 @@ export default function PostSong() {
   const loading = songState?.loading;
   const songData = songState?.data;
   const postSong = songState?.postSong;
+  const deleteSong = songState?.deleteSong;
+  const songActive = songState?.playSong;
 
   useEffect(() => {
     dispatch(fetchSongAction());
-  }, [dispatch, postSong]);
+  }, [dispatch, postSong, deleteSong]);
+
+  useEffect(() => {
+    setIdSong(songActive.id);
+  }, [songActive]);
 
   const [visible, setVisible] = useState(false);
   const [idSong, setIdSong] = useState(0);
@@ -69,6 +75,7 @@ export default function PostSong() {
         songAuthor: infoSongInput.songAuthor,
         urlSong: infoSongInput.urlSong,
         imgSong: infoSongInput.imgDefaultSong,
+        like: 0
       };
       dispatch(postSongAction(newSong));
     }
@@ -163,9 +170,11 @@ export default function PostSong() {
                 className={`list__music ${
                   idSong === item.id && "active__song"
                 }`}
-                onClick={() => handlePlaySong(item.id)}
               >
-                <div className="item__left">
+                <div
+                  className="item__left"
+                  onClick={() => handlePlaySong(item.id)}
+                >
                   <img src={item.imgSong} alt="OT" />
                   <div className="info__song">
                     <span>{item.songName}</span>
