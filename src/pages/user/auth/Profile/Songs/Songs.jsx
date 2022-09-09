@@ -1,8 +1,9 @@
 import { HeartFilled } from "@ant-design/icons";
-import React from "react";
+import React, { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { playSongAction } from "../../../../../stores/slices/song.slice.admin";
 import {
   countDislikeAction,
   dislikeSongAction,
@@ -13,6 +14,8 @@ export default function Songs() {
   const userInfoState = useSelector((state) => state.user.userInfoState);
   const songState = useSelector((state) => state.song.songState);
   const dispatch = useDispatch();
+  const [idSong, setIdSong] = useState(0);
+
   const listInfoLike = userInfoState?.listUserLikeSong;
   const userInfo = userInfoState?.data;
   const listSong = songState?.data;
@@ -25,8 +28,15 @@ export default function Songs() {
 
   const handleDeleteLikeSong = (id, songId, songName) => {
     const song = listSong.filter((e) => e.id === songId);
+    const like = song[0].like;
+    const idSong = song[0].id;
+    dispatch(countDislikeAction({ like, idSong }));
     dispatch(dislikeSongAction({ id, songName }));
-    dispatch(countDislikeAction(song));
+  };
+
+  const handlePlaySong = (song) => {
+    setIdSong(song);
+    dispatch(playSongAction(song));
   };
 
   return (
@@ -50,8 +60,16 @@ export default function Songs() {
         {listInfoLike?.map((item) => {
           if (item.email === userEmail) {
             return (
-              <div key={item.id} className="list__songs">
-                <div className="item__left">
+              <div
+                key={item.id}
+                className={`list__songs ${
+                  idSong === item.songId && "active__song"
+                }`}
+              >
+                <div
+                  onClick={() => handlePlaySong(item.songId)}
+                  className="item__left"
+                >
                   <img src={item.imgSong} alt="OT" />
                   <div className="info__song">
                     <span>{item.songName}</span>

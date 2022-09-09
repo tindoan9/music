@@ -9,4 +9,5 @@ export const SongsAPI = {
     likeSong: (data) => API.post(`${URL_API}/like`, data),
     dislikeSong: (id) => API.delete(`${URL_API}/like`, id),
     fetchListUserLikeSong: () => API.get(`${URL_API}/like`),
+    fetchSortLikeSongDesc: () => API.get(`${URL_API}/songs?_sort=like&_order=desc`),
 }

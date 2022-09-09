@@ -1,7 +1,46 @@
-.url__404{
+.leaderboard{
+    width: 85%;
+    margin-left: 10%;
+    transform: translate(0, 100px);
+    padding-bottom: 100px;
+}
+.leaderboard .rank__song{
+    width: 100%;
+    margin-top: 50px;
+}
+.leaderboard .rank__song .rank__song--item{
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
-    height: 90vh;
+    border-bottom: 1px solid #999;
+    padding: 10px;
+}
+.leaderboard .rank__song .rank__song--item:hover{
+    background-color: #f3f3f3;
+}
+.leaderboard .rank__song .rank__song--item .number__rank{
+    width: 5%;
+    text-align: center;
+}
+.leaderboard .rank__song .rank__song--item span{
+    width: 5%;
+}
+.leaderboard .rank__song .rank__song--item .info__song__left{
+    width: 60%;
+    display: flex;
+}
+.leaderboard .rank__song .rank__song--item .info__song__left img{
+    width: 70px;
+    height: 70px;
+    margin-right: 10px;
+}
+.leaderboard .rank__song .rank__song--item .info__song__left .song__name_author{
+    display: grid;
+}
+.leaderboard .rank__song .rank__song--item .album__song__center{
+    width: 20%;
+}
+.leaderboard .rank__song .rank__song--item .like__song__right{
+    width: 10%;
+    color: #239292;
+    font-size: 18px;
 }

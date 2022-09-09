@@ -3,7 +3,6 @@ import { useLocation } from 'react-router-dom';
 import { AdminLayout } from '../../layouts/AdminLayout/AdminLayout';
 import HomeAdmin from './HomeAdmin/HomeAdmin';
 import PostSong from './PostSong/PostSong';
-import SongRating from './SongRating/SongRating';
 
 export default function HeaderAdmin(props) {
     const location = useLocation();
@@ -14,8 +13,6 @@ export default function HeaderAdmin(props) {
 			return <HomeAdmin/>;
 		case "/dashboard/postsong":
 			return <PostSong/>;
-		case "/dashboard/songrating":
-			return <SongRating/>;
 		default:
 			return <HomeAdmin/>;
 		}

@@ -23,11 +23,6 @@ export default function AdminHeader() {
           <div className="sidebar__item">
             <NavLink to={"/dashboard/home"}>
               <p>
-                <AppstoreFilled />
-              </p>
-            </NavLink>
-            <NavLink to={"/dashboard/songrating"}>
-              <p>
                 <AreaChartOutlined />
               </p>
             </NavLink>

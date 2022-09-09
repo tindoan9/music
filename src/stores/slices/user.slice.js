@@ -15,7 +15,8 @@ const initialState = {
         countLike: [],
         countDislike: [],
         searchSong: [],
-        listUserLikeSong: [], 
+        listUserLikeSong: [],
+        listSortLikeSong: [], 
         loading: false,
         error: null
     }
@@ -276,10 +277,27 @@ const userSlice = createSlice({
         },
         fetchListUserLikeSongActionFailse: (state, action) => {
             notification.error(action.payload)
+        },
+        fetchSortLikeSongDescAction: (state, action) => {
+            state.userInfoState = {
+                ...state.userInfoState,
+                loading: true
+            }
+        },
+        fetchSortLikeSongDescActionSuccess: (state, action) => {
+            const {listSortLikeSong} = action.payload
+            state.userInfoState = {
+                ...state.userInfoState,
+                listSortLikeSong,
+                loading: false
+            }
+        },
+        fetchSortLikeSongDescActionFailse: (state, action) => {
+            notification.error(action.payload)
         }
     }
 })
 
-export const {loginAction, loginActionSuccess, loginActionFailed, registerAction, registerActionSuccess, registerActionFailed, logoutAction, fetchAvatarAction, fetchAvatarActionSuccess, fetchAvatarActionFailed, updateInfoUserAction, updateInfoUserActionSuccess, updateInfoUserActionFailed, likeSongAction, likeSongActionSuccess, likeSongActionFailed, searchSongAction, searchSongActionSuccess, searchSongActionFailed, dislikeSongAction, dislikeSongActionSuccess, dislikeSongActionFailed, countLikeAction, countLikeActionSuccess, countLikeActionFailed, countDislikeAction, countDislikeActionSuccess, countDislikeActionFailed, fetchListUserLikeSongAction, fetchListUserLikeSongActionSuccess, fetchListUserLikeSongActionFailse} = userSlice.actions
+export const {loginAction, loginActionSuccess, loginActionFailed, registerAction, registerActionSuccess, registerActionFailed, logoutAction, fetchAvatarAction, fetchAvatarActionSuccess, fetchAvatarActionFailed, updateInfoUserAction, updateInfoUserActionSuccess, updateInfoUserActionFailed, likeSongAction, likeSongActionSuccess, likeSongActionFailed, searchSongAction, searchSongActionSuccess, searchSongActionFailed, dislikeSongAction, dislikeSongActionSuccess, dislikeSongActionFailed, countLikeAction, countLikeActionSuccess, countLikeActionFailed, countDislikeAction, countDislikeActionSuccess, countDislikeActionFailed, fetchListUserLikeSongAction, fetchListUserLikeSongActionSuccess, fetchListUserLikeSongActionFailse, fetchSortLikeSongDescAction, fetchSortLikeSongDescActionSuccess, fetchSortLikeSongDescActionFailse} = userSlice.actions
 
 export const userReducer = userSlice.reducer

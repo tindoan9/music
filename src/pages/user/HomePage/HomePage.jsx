@@ -27,14 +27,21 @@ export default function HomePage() {
   const listSong = songState?.data;
   const songActive = songState?.playSong;
   const userInfo = userInfoState?.data;
+  const likeSong = userInfoState?.likeSong;
   const userID = userInfo?.id;
   const userEmail = userInfo?.email;
-  const listInfoLike = userInfoState?.likeSong;
+  const listInfoLike = userInfoState?.listUserLikeSong;
+  const userIdLikeSong = listInfoLike.filter((e) => e.email === userEmail);
+  const likeSongId = []
+  const likeUserEmail = []
+  userIdLikeSong.map((item) => likeSongId.push(item.songId))
+  userIdLikeSong.map((item) => likeUserEmail.push(item.email))
+  
 
   useEffect(() => {
     dispatch(fetchSongAction());
-    dispatch(fetchListUserLikeSongAction())
-  }, [dispatch]);
+    dispatch(fetchListUserLikeSongAction());
+  }, [dispatch, likeSong]);
 
   useEffect(() => {
     setIdSong(songActive.id);
@@ -75,6 +82,7 @@ export default function HomePage() {
     }
   };
 
+
   return (
     <>
       <div className="wrapper">
@@ -91,7 +99,7 @@ export default function HomePage() {
               <span></span>
             </div>
           </div>
-          {listSong?.map?.((item) => {
+          {listSong?.map?.((item, index) => {
             return (
               <div
                 key={item.id}
@@ -113,11 +121,12 @@ export default function HomePage() {
                   <span></span>
                 </div>
                 <div className="newsong__right">
-                  {listInfoLike?.userId === userID && listInfoLike?.songId === item.id ? (
+                  {likeUserEmail[index] === userEmail &&
+                  likeSongId[index] === item.id ? (
                     <HeartFilled
                       className="icon__love"
                       onClick={() => {notification.warning({
-                        message: "Bạn cần vào thư viện để có thể bỏ thích bài hát này!",
+                        message: "Bạn cần vào trang cá nhân để có thể xóa bài hát!",
                         duration: 2,
                       });}}
                     />

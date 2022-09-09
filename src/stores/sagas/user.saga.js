@@ -1,6 +1,6 @@
 import { delay, put, takeEvery } from "redux-saga/effects";
 import { AuthAPI, AvatarAPI, SongsAPI, UserAPI } from "../../api";
-import { countDislikeAction, countDislikeActionFailed, countDislikeActionSuccess, countLikeAction, countLikeActionFailed, countLikeActionSuccess, dislikeSongAction, dislikeSongActionFailed, dislikeSongActionSuccess, fetchAvatarAction, fetchAvatarActionFailed, fetchAvatarActionSuccess, fetchListUserLikeSongAction, fetchListUserLikeSongActionFailse, fetchListUserLikeSongActionSuccess, likeSongAction, likeSongActionFailed, likeSongActionSuccess, loginAction, loginActionFailed, loginActionSuccess, registerAction, registerActionFailed, registerActionSuccess, searchSongAction, searchSongActionFailed, searchSongActionSuccess, updateInfoUserAction, updateInfoUserActionFailed, updateInfoUserActionSuccess } from "../slices/user.slice";
+import { countDislikeAction, countDislikeActionFailed, countDislikeActionSuccess, countLikeAction, countLikeActionFailed, countLikeActionSuccess, dislikeSongAction, dislikeSongActionFailed, dislikeSongActionSuccess, fetchAvatarAction, fetchAvatarActionFailed, fetchAvatarActionSuccess, fetchListUserLikeSongAction, fetchListUserLikeSongActionFailse, fetchListUserLikeSongActionSuccess, fetchSortLikeSongDescAction, fetchSortLikeSongDescActionFailse, fetchSortLikeSongDescActionSuccess, likeSongAction, likeSongActionFailed, likeSongActionSuccess, loginAction, loginActionFailed, loginActionSuccess, registerAction, registerActionFailed, registerActionSuccess, searchSongAction, searchSongActionFailed, searchSongActionSuccess, updateInfoUserAction, updateInfoUserActionFailed, updateInfoUserActionSuccess } from "../slices/user.slice";
 
 function* login(action) {
     try {
@@ -96,11 +96,10 @@ function* countLike(action) {
 function* countDislike(action) {
     try {
         const countDislikeSong = action.payload
-        const dislike = countDislikeSong[0].like - 1
-        const songId = countDislikeSong[0].id
+        const dislike = countDislikeSong.like - 1
         const response = yield SongsAPI.editSong({
             like: dislike
-        }, songId)
+        }, countDislikeSong.idSong)
         yield put(countDislikeActionSuccess(response.data))
     } catch (e) {
         yield put(countDislikeActionFailed(e.response.data))
@@ -129,6 +128,18 @@ function* fetchListUserLikeSong(action) {
     }
 }
 
+function* fetchSortLikeSongDesc(action) {
+    try {
+        const response = yield SongsAPI.fetchSortLikeSongDesc()
+        const listSortLikeSong = response.data
+        yield put(fetchSortLikeSongDescActionSuccess({
+            listSortLikeSong
+        }))
+    } catch (e) {
+        yield put(fetchSortLikeSongDescActionFailse(e.response.data))
+    }
+}
+
 function* searchSong(action) {
     try {
         const response = yield SongsAPI.searchSong(action.payload)
@@ -150,5 +161,6 @@ export function* userSaga() {
     yield takeEvery(countLikeAction, countLike);
     yield takeEvery(searchSongAction, searchSong);
     yield takeEvery(fetchListUserLikeSongAction, fetchListUserLikeSong);
+    yield takeEvery(fetchSortLikeSongDescAction, fetchSortLikeSongDesc);
     yield takeEvery(countDislikeAction, countDislike);
 }
