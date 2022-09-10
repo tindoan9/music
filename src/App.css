@@ -76,6 +76,7 @@
   }
 
   .wrapper {
+    width: 60%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -97,6 +98,9 @@
 }
 
 @media only screen and (max-width: 376px) {
+  .wrapper{
+    width: 50%;
+  }
   .wrapper .info__select__song {
     width: 133%;
     display: flex;
