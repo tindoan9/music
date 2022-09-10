@@ -158,7 +158,6 @@ export default function SidebarHeader() {
   );
 
   const [openListSong, setOpenListSong] = useState(false);
-  const [placement, setPlacement] = useState("left");
 
   const showDrawerListSong = () => {
     setOpenListSong(true);
@@ -185,11 +184,9 @@ export default function SidebarHeader() {
             />
             <Drawer
               title="DANH SÁCH NHẠC"
-              placement={placement}
-              closable={false}
+              placement="left"
               onClose={onCloseListSong}
               visible={openListSong}
-              key={placement}
             >
               {listSong?.map?.((item) => {
                 return (
