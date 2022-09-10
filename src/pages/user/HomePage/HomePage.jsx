@@ -154,7 +154,8 @@ export default function HomePage() {
         </div>
         <div className="info__select__song">
           <CustomerServiceOutlined
-            style={{ fontSize: "130px", color: "#239292" }}
+            style={{ fontSize: "180px", color: "#239292" }}
+            className="dcd__icon"
           />
           <b>{songActive?.songName}</b>
           <span>{songActive?.songAuthor}</span>

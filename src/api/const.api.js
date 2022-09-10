@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const URL_API = 'http://localhost:3553/api';
+export const URL_API = 'https://fake-rest-api-music-app.herokuapp.com/api';
 
 export const API = {
     get: (url) => axios.get(url),

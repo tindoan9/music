@@ -17,9 +17,11 @@ import {
   searchSongAction,
 } from "../../../stores/slices/user.slice";
 import { playSongAction } from "../../../stores/slices/song.slice.admin";
+import { BsMusicNoteList } from "react-icons/bs";
 
 export default function SidebarHeader() {
   const userInfoState = useSelector((state) => state.user.userInfoState);
+  const songState = useSelector((state) => state.song.songState);
   const [menuList, setMenuList] = useState([]);
   const [urlAdmin, setUrlAmin] = useState();
   const [idSong, setIdSong] = useState(0);
@@ -29,6 +31,8 @@ export default function SidebarHeader() {
 
   const userInfoDashboard = userInfoState?.data?.decentralization;
   const searchItem = userInfoState?.searchSong;
+  const listSong = songState?.data;
+
 
   useEffect(() => {
     return !userInfoState.data
@@ -153,12 +157,58 @@ export default function SidebarHeader() {
     </>
   );
 
+  const [openListSong, setOpenListSong] = useState(false);
+  const [placement, setPlacement] = useState("left");
+
+  const showDrawerListSong = () => {
+    setOpenListSong(true);
+  };
+
+  const onCloseListSong = () => {
+    setOpenListSong(false);
+  };
+
   return (
     <>
       <header>
         <div className="header__layout">
           <div className="user__outline">
             {urlAdmin}
+            <BsMusicNoteList
+              style={{
+                backgroundColor: "#cce0e0",
+                padding: "8px 8px",
+                borderRadius: "60px",
+              }}
+              className="list__song__icon"
+              onClick={showDrawerListSong}
+            />
+            <Drawer
+              title="DANH SÁCH NHẠC"
+              placement={placement}
+              closable={false}
+              onClose={onCloseListSong}
+              visible={openListSong}
+              key={placement}
+            >
+              {listSong?.map?.((item) => {
+                return (
+                  <div
+                    onClick={() => handlePlaySong(item.id)}
+                    className={`song__list__search ${
+                      idSong === item.id && "active__song"
+                    }`}
+                    key={item.id}
+                  >
+                    <img src={item.imgSong} alt="" />
+                    <div className="info__song__search">
+                      <b>{item.songName}</b>
+                      <span>{item.songAuthor}</span>
+                    </div>
+                  </div>
+                );
+              })}
+            </Drawer>
             <SearchOutlined
               onClick={showDrawer}
               style={{
