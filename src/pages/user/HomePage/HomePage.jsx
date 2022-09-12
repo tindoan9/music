@@ -2,6 +2,7 @@ import {
   CustomerServiceOutlined,
   HeartFilled,
   HeartOutlined,
+  LoadingOutlined,
 } from "@ant-design/icons";
 import { notification } from "antd";
 import React from "react";
@@ -24,6 +25,7 @@ export default function HomePage() {
   const dispatch = useDispatch();
   const [idSong, setIdSong] = useState(0);
 
+  const loading = songState?.loading;
   const listSong = songState?.data;
   const songActive = songState?.playSong;
   const userInfo = userInfoState?.data;
@@ -32,11 +34,10 @@ export default function HomePage() {
   const userEmail = userInfo?.email;
   const listInfoLike = userInfoState?.listUserLikeSong;
   const userIdLikeSong = listInfoLike.filter((e) => e.email === userEmail);
-  const likeSongId = []
-  const likeUserEmail = []
-  userIdLikeSong.map((item) => likeSongId.push(item.songId))
-  userIdLikeSong.map((item) => likeUserEmail.push(item.email))
-  
+  const likeSongId = [];
+  const likeUserEmail = [];
+  userIdLikeSong.map((item) => likeSongId.push(item.songId));
+  userIdLikeSong.map((item) => likeUserEmail.push(item.email));
 
   useEffect(() => {
     dispatch(fetchSongAction());
@@ -82,7 +83,6 @@ export default function HomePage() {
     }
   };
 
-
   return (
     <>
       <div className="wrapper">
@@ -99,6 +99,14 @@ export default function HomePage() {
               <span></span>
             </div>
           </div>
+          {loading && (
+            <LoadingOutlined
+              style={{
+                fontSize: "22px",
+                textAlign: "center",
+              }}
+            />
+          )}
           {listSong?.map?.((item, index) => {
             return (
               <div
@@ -125,10 +133,13 @@ export default function HomePage() {
                   likeSongId[index] === item.id ? (
                     <HeartFilled
                       className="icon__love"
-                      onClick={() => {notification.warning({
-                        message: "Bạn cần vào trang cá nhân để có thể xóa bài hát!",
-                        duration: 2,
-                      });}}
+                      onClick={() => {
+                        notification.warning({
+                          message:
+                            "Bạn cần vào trang cá nhân để có thể xóa bài hát!",
+                          duration: 2,
+                        });
+                      }}
                     />
                   ) : (
                     <HeartOutlined

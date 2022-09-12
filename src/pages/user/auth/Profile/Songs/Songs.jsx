@@ -1,4 +1,4 @@
-import { HeartFilled } from "@ant-design/icons";
+import { HeartFilled, LoadingOutlined } from "@ant-design/icons";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,6 +16,7 @@ export default function Songs() {
   const dispatch = useDispatch();
   const [idSong, setIdSong] = useState(0);
 
+  const loading = userInfoState?.loading;
   const listInfoLike = userInfoState?.listUserLikeSong;
   const userInfo = userInfoState?.data;
   const listSong = songState?.data;
@@ -57,6 +58,14 @@ export default function Songs() {
             <span>ALBUM</span>
           </div>
         </div>
+        {loading && (
+          <LoadingOutlined
+            style={{
+              fontSize: "22px",
+              textAlign: "center",
+            }}
+          />
+        )}
         {listInfoLike?.map((item) => {
           if (item.email === userEmail) {
             return (

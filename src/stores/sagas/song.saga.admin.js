@@ -21,6 +21,7 @@ function* postSong(action){
 
 function* fetchSongs(action) {
     try {
+        yield delay(100)
         const response = yield SongsAPI.getSong()
         const songData = response.data
         yield put(fetchSongActionSuccess({

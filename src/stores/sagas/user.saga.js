@@ -118,6 +118,7 @@ function* dislikeSong(action) {
 
 function* fetchListUserLikeSong(action) {
     try {
+        yield delay(100)
         const response = yield SongsAPI.fetchListUserLikeSong()
         const listUserLikeSong = response.data
         yield put(fetchListUserLikeSongActionSuccess({
@@ -130,6 +131,7 @@ function* fetchListUserLikeSong(action) {
 
 function* fetchSortLikeSongDesc(action) {
     try {
+        yield delay(100)
         const response = yield SongsAPI.fetchSortLikeSongDesc()
         const listSortLikeSong = response.data
         yield put(fetchSortLikeSongDescActionSuccess({
