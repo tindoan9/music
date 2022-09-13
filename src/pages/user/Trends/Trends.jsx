@@ -9,7 +9,7 @@ export default function Trends() {
   const dispatch = useDispatch();
   const [idSong, setIdSong] = useState(0);
 
-  const loading = userInfoState?.loading;
+  const loading = userInfoState?.loading
   const listSortLikeSongDesc = userInfoState?.listSortLikeSong;
 
   useEffect(() => {
@@ -26,14 +26,6 @@ export default function Trends() {
       <div className="leaderboard">
         <h1>BẢNG XẾP HẠNG BÀI HÁT</h1>
         <div className="rank__song">
-          {loading && (
-            <LoadingOutlined
-              style={{
-                fontSize: "22px",
-                textAlign: "center",
-              }}
-            />
-          )}
           {listSortLikeSongDesc?.map((item) => {
             count++;
             return (
@@ -66,6 +58,14 @@ export default function Trends() {
               </div>
             );
           })}
+          {loading && (
+            <LoadingOutlined
+              style={{
+                fontSize: "22px",
+                textAlign: "center",
+              }}
+            />
+          )}
         </div>
       </div>
     </>

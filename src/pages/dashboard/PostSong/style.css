@@ -2,7 +2,7 @@
     width: 90%;
     float: right;
     margin-top: 30px;
-    padding-bottom: 100px;
+    padding-bottom: 150px;
 }
 .form__postsong .btn__postsong{
     text-align: center;
@@ -79,4 +79,19 @@
     border-radius: 10px;
     background-color: #8aabff;
     color: #fff;
+}
+.form__search__song--admin{
+    display: flex;
+
+}
+.form__search__song--admin .search__icon__admin{
+    font-size: 22px;
+    transform: translate(35px, 6px);
+}
+.form__search__song--admin .search__input__admin{
+    border: none;
+    outline: none;
+    border: 1px solid #333;
+    border-radius: 10px;
+    padding: 6px 50px;
 }

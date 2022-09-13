@@ -28,7 +28,7 @@ function* fetchSongs(action) {
             data: songData
         }))
     } catch (e) {
-        yield put(fetchSongActionfailed(e.response.data))
+        yield put(fetchSongActionfailed(e.response))
     }
 }
 

@@ -25,7 +25,7 @@ export default function HomePage() {
   const dispatch = useDispatch();
   const [idSong, setIdSong] = useState(0);
 
-  const loading = songState?.loading;
+  const loading = userInfoState?.loading;
   const listSong = songState?.data;
   const songActive = songState?.playSong;
   const userInfo = userInfoState?.data;
@@ -99,14 +99,6 @@ export default function HomePage() {
               <span></span>
             </div>
           </div>
-          {loading && (
-            <LoadingOutlined
-              style={{
-                fontSize: "22px",
-                textAlign: "center",
-              }}
-            />
-          )}
           {listSong?.map?.((item, index) => {
             return (
               <div
@@ -162,6 +154,14 @@ export default function HomePage() {
               </div>
             );
           })}
+          {loading && (
+            <LoadingOutlined
+              style={{
+                fontSize: "22px",
+                textAlign: "center",
+              }}
+            />
+          )}
         </div>
         <div className="info__select__song">
           <CustomerServiceOutlined

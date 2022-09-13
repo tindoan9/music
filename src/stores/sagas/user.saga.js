@@ -125,7 +125,7 @@ function* fetchListUserLikeSong(action) {
             listUserLikeSong
         }))
     } catch (e) {
-        yield put(fetchListUserLikeSongActionFailse(e.response.data))
+        yield put(fetchListUserLikeSongActionFailse(e.response))
     }
 }
 
@@ -138,7 +138,7 @@ function* fetchSortLikeSongDesc(action) {
             listSortLikeSong
         }))
     } catch (e) {
-        yield put(fetchSortLikeSongDescActionFailse(e.response.data))
+        yield put(fetchSortLikeSongDescActionFailse(e.response))
     }
 }
 

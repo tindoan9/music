@@ -3,6 +3,7 @@ import {
   DeleteOutlined,
   EditOutlined,
   LoadingOutlined,
+  SearchOutlined,
 } from "@ant-design/icons";
 import { Modal, notification } from "antd";
 import React, { useState } from "react";
@@ -11,25 +12,26 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
   deleteSongAction,
-  fetchSongAction,
   playSongAction,
   postSongAction,
 } from "../../../stores/slices/song.slice.admin";
 import { Popconfirm } from "antd";
+import { searchSongAction } from "../../../stores/slices/user.slice";
 
 export default function PostSong() {
+  const userInfoState = useSelector((state) => state.user.userInfoState);
   const songState = useSelector((state) => state.song.songState);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const searchItem = userInfoState?.searchSong;
   const loading = songState?.loading;
-  const songData = songState?.data;
   const postSong = songState?.postSong;
   const deleteSong = songState?.deleteSong;
   const songActive = songState?.playSong;
 
   useEffect(() => {
-    dispatch(fetchSongAction());
+    dispatch(searchSongAction(""));
   }, [dispatch, postSong, deleteSong]);
 
   useEffect(() => {
@@ -75,7 +77,7 @@ export default function PostSong() {
         songAuthor: infoSongInput.songAuthor,
         urlSong: infoSongInput.urlSong,
         imgSong: infoSongInput.imgDefaultSong,
-        like: 0
+        like: 0,
       };
       dispatch(postSongAction(newSong));
     }
@@ -96,6 +98,11 @@ export default function PostSong() {
   const handlePlaySong = (song) => {
     setIdSong(song);
     dispatch(playSongAction(song));
+  };
+
+  const handleSearchChange = (text) => {
+    const values = text.target.value;
+    dispatch(searchSongAction(values));
   };
 
   return (
@@ -151,6 +158,15 @@ export default function PostSong() {
             />
           </Modal>
         </div>
+        <div className="form__search__song--admin">
+          <SearchOutlined className="search__icon__admin" />
+          <input
+            type="text"
+            className="search__input__admin"
+            placeholder="Nhập tên bài hát, nghệ sĩ"
+            onChange={handleSearchChange}
+          />
+        </div>
         <div className="list__song__play">
           <div className="media__header__admin">
             <div className="media__left">
@@ -163,7 +179,7 @@ export default function PostSong() {
               <span></span>
             </div>
           </div>
-          {songData?.map?.((item) => {
+          {searchItem?.map?.((item) => {
             return (
               <div
                 key={item.id}

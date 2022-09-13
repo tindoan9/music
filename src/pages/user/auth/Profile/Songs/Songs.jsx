@@ -16,7 +16,7 @@ export default function Songs() {
   const dispatch = useDispatch();
   const [idSong, setIdSong] = useState(0);
 
-  const loading = userInfoState?.loading;
+  const loading = userInfoState?.loading
   const listInfoLike = userInfoState?.listUserLikeSong;
   const userInfo = userInfoState?.data;
   const listSong = songState?.data;
@@ -58,14 +58,6 @@ export default function Songs() {
             <span>ALBUM</span>
           </div>
         </div>
-        {loading && (
-          <LoadingOutlined
-            style={{
-              fontSize: "22px",
-              textAlign: "center",
-            }}
-          />
-        )}
         {listInfoLike?.map((item) => {
           if (item.email === userEmail) {
             return (
@@ -99,6 +91,14 @@ export default function Songs() {
             );
           }
         })}
+        {loading && (
+            <LoadingOutlined
+              style={{
+                fontSize: "22px",
+                textAlign: "center",
+              }}
+            />
+          )}
       </div>
     </div>
   );
