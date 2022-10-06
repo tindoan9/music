@@ -99,7 +99,7 @@ const songSlice = createSlice({
       state.songState = {
         ...state.songState,
         editSong: editSongDone,
-        loading: true,
+        loading: false,
       };
     },
     editSongActionFailed: (state, action) => {
