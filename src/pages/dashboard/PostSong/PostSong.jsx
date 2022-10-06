@@ -25,6 +25,7 @@ export default function PostSong() {
   const navigate = useNavigate();
 
   const searchItem = userInfoState?.searchSong;
+  const editSongStore = songState?.editSong;
   const loading = songState?.loading;
   const postSong = songState?.postSong;
   const deleteSong = songState?.deleteSong;
@@ -32,7 +33,7 @@ export default function PostSong() {
 
   useEffect(() => {
     dispatch(searchSongAction(""));
-  }, [dispatch, postSong, deleteSong]);
+  }, [dispatch, postSong, deleteSong, editSongStore]);
 
   useEffect(() => {
     setIdSong(songActive.id);
@@ -209,7 +210,7 @@ export default function PostSong() {
                     title="Bạn muốn xóa bài hát này?"
                     onConfirm={() => confirmDeleteSong(item.id)}
                     okText="Xóa"
-                    cancelText="TỪ TỪ"
+                    cancelText="<"
                   >
                     <span>
                       <DeleteOutlined />

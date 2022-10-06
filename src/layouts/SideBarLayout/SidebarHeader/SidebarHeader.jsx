@@ -41,7 +41,7 @@ export default function SidebarHeader() {
   }, [userInfoState]);
 
   useEffect(() => {
-    return userInfoState?.data?.decentralization === "admin"
+    return userInfoDashboard === "admin"
       ? setUrlAmin(urlDashboard)
       : setUrlAmin("");
   }, [userInfoDashboard]);
